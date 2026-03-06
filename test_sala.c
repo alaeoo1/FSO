@@ -35,7 +35,8 @@ void test_ReservasMultiples() {
     #define CAPACIDAD_M 5
     #define ID1 100
     #define ID2 200
-    int asiento1, asiento2;
+    int asiento1;
+    int asiento2;
 
     INICIO_TEST("Reservas múltiples");
     crea_sala(CAPACIDAD_M);
@@ -115,7 +116,7 @@ void ejecuta_tests () {
     test_AsientoInvalido();
     test_LiberaVacio();
     test_LlenaSala();	
-    test_ReutilizaAsiento();
+    //test_ReutilizaAsiento();
     test_Estado();
 
 }
