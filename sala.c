@@ -8,15 +8,18 @@ int capacidad = 0;
 
 // 0 = vacío
 
-void crea_sala(int cap) {
+int crea_sala(int cap) {
     capacidad = cap;
     asientos = malloc(sizeof(int) * capacidad);
+    if(asientos == NULL) return -1;
+
     for (int i = 0; i < capacidad; i++) {
         asientos[i] = 0;
     }
+    return capacidad;
 }
 
-int capacidad_sala(void) {
+int capacidad_sala() {
     return capacidad;
 }
 
@@ -50,7 +53,7 @@ int estado_asiento(int id_asiento) {
     return 0;
 }
 
-int asientos_libres(void) {
+int asientos_libres() {
     int count = 0;
     for (int i = 0; i < capacidad; i++) {
         if (asientos[i] == 0) count++;
@@ -58,23 +61,26 @@ int asientos_libres(void) {
     return count;
 }
 
-int asientos_ocupados(void) {
+int asientos_ocupados() {
     return capacidad - asientos_libres();
 }
 
-void elimina_sala(void) {
+int elimina_sala() {
+    if (asientos == NULL) return -1;
+    
     free(asientos);
     asientos = NULL;
     capacidad = 0;
+    return 0;
 }
 
 //------------------------------------------------------------ tests extra
 
-void estado_sala()
+int estado_sala()
 {
    if (capacidad == 0){
    	printf("Sala vacia\n");
-   	return;
+   	return -1;
    }
    
    int libres = 0;
@@ -83,24 +89,63 @@ void estado_sala()
 
    	if(asientos[i] == 0){
    		libres++;
-   		printf("ID: %d Libre\n", i+1);
+   		printf("ID: %d Libre, ", i+1);
    	} else {
    		ocupados++;
    		printf("ID: %d Ocupado\n", i+1);
    	}
    }
    
-   printf("Actualmente hay.. %d asientos vacios y %d ocupados", libres, ocupados);
+   printf("Actualmente hay.. %d asientos vacios y %d ocupados\n", libres, ocupados);
+   return 0;
 }
 
-void sentarse(int id)
+int sentarse(int id)
 {
     for(int i=0; i < capacidad; i++){
         if(asientos[i] == 0){
             asientos[i] = id;
-            printf("Su asiento es el Nº%d", i);
-            return;
+            printf("Su asiento es el Nº%d\n", i+1);
+            return 0;
         }
     }
     printf("La sala está llena");
+    return -1;
+}
+
+int levantarse(int id)
+{
+    for(int i=0; i < capacidad; i++){
+        if(asientos[i] == id){
+            asientos[i] = 0;
+            printf("La persona %d se ha levantado del asiento %d\n", id, i+1);
+            return 0;
+        }
+    }
+    printf("No se ha encontrado un asiento con ID: %d", id);
+    return -1;
+}
+
+int reserva_multiple(int npersonas, int* lista_id)
+{
+    int libres = asientos_libres();
+    if (libres < npersonas){
+        printf("No hay asientos suficientes para %d personas\n", npersonas);
+        return -1;
+    }
+
+    for(int i=0; i < npersonas; i++){
+        int encontrado = 0;
+        for(int j=0; j < capacidad; j++){
+            if (asientos[j] == 0 && encontrado == 0){
+                asientos[j] = lista_id[i];
+                encontrado = 1;
+            }
+        }
+        if (encontrado == 0){
+            return -1;
+        }
+
+    }
+    return 0;
 }
