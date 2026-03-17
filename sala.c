@@ -92,3 +92,15 @@ void estado_sala()
    
    printf("Actualmente hay.. %d asientos vacios y %d ocupados", libres, ocupados);
 }
+
+void sentarse(int id)
+{
+    for(int i=0; i < capacidad; i++){
+        if(asientos[i] == 0){
+            asientos[i] = id;
+            printf("Su asiento es el Nº%d", i);
+            return;
+        }
+    }
+    printf("La sala está llena");
+}
