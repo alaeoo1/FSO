@@ -74,7 +74,7 @@ int elimina_sala() {
     return 0;
 }
 
-//------------------------------------------------------------ tests extra
+// funciones tests extra
 
 int estado_sala()
 {
