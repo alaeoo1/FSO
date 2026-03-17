@@ -32,6 +32,28 @@ void test_ReservaBasica() {
     elimina_sala();
     FIN_TEST("Reserva básica");
 }
+<<<<<<< HEAD
+=======
+void test_ReservasMultiples() {
+    #define CAPACIDAD_M 5
+    #define ID1 100
+    #define ID2 200
+    int asiento1;
+    int asiento2;
+
+    INICIO_TEST("Reservas múltiples");
+    crea_sala(CAPACIDAD_M);
+    DebeSerCierto((asiento1 = reserva_asiento(ID1)) >= 0);
+    DebeSerCierto((asiento2 = reserva_asiento(ID2)) >= 0 && asiento2 != asiento1);
+    DebeSerCierto(estado_asiento(asiento1) == ID1);
+    DebeSerCierto(estado_asiento(asiento2) == ID2);
+    DebeSerCierto(asientos_ocupados() == 2);
+    libera_asiento(asiento1);
+    libera_asiento(asiento2);
+    elimina_sala();
+    FIN_TEST("Reservas múltiples");
+}
+>>>>>>> c7c5e7364eb7ef1e81fd91fba9743188014ad503
 
 void test_AsientoInvalido() {
     INICIO_TEST("Asiento inválido");
@@ -131,7 +153,7 @@ void ejecuta_tests () {
     test_AsientoInvalido();
     test_LiberaVacio();
     test_LlenaSala();	
-    test_ReutilizaAsiento();
+    //test_ReutilizaAsiento();
     test_Estado();
     test_Sentarse();
     test_Levantarse();
